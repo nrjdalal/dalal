@@ -31,8 +31,6 @@ export const ollama = async (args: string[]) => {
       args,
     })
 
-    console.log("args", positionals)
-
     if (!positionals[0]) {
       if (values.list) console.log(await tags())
       if (values.version) console.log(await version())
