@@ -1,5 +1,5 @@
 import { parseArgs } from "node:util"
-import { ollamaVersion } from "@/lib/ollama"
+import { ollamaListLocalModels, ollamaVersion } from "@/lib/ollama"
 import { author, name, version } from "~/package.json"
 
 const versionMessage = `${name}@${version}`
@@ -66,6 +66,13 @@ const main = async () => {
     const command = positionals[0]
 
     if (command === "ollama") {
+      const command = positionals.slice(1)[0]
+
+      if (command === "list") {
+        const models = await ollamaListLocalModels()
+        console.log(models)
+        process.exit(0)
+      }
       if (values.help) {
         console.log(ollamaHelpMessage)
         process.exit(0)
