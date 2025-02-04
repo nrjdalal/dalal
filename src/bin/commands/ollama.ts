@@ -1,4 +1,4 @@
-import { generate, tags, version } from "@/lib/ollama"
+import { tags, version } from "@/lib/ollama"
 import { name } from "~/package.json"
 
 const ollamaHelpMessage = `ollama
@@ -33,7 +33,49 @@ export const ollama = async ({
       model = getTags["models"][0].name
     }
     console.log(`Generating text with model: ${model}\n`)
-    console.log((await generate({ model, prompt: positionals[1] })).response)
+
+    const prompt = positionals.slice(1).join(" ")
+
+    try {
+      const response = await fetch(
+        (values.base || "http://localhost:11434") + "/api/generate",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ model, prompt, stream: true }),
+        },
+      )
+
+      if (!response.body) {
+        throw new Error("Response body is null")
+      }
+
+      const reader = response.body.getReader()
+      const decoder = new TextDecoder("utf-8")
+      let buffer = ""
+
+      while (true) {
+        const { done, value } = await reader.read()
+        if (done) break
+        const chunk = decoder.decode(value, { stream: true })
+        buffer += chunk
+
+        let boundary = buffer.indexOf("\n")
+        while (boundary !== -1) {
+          const completeChunk = buffer.slice(0, boundary)
+          buffer = buffer.slice(boundary + 1)
+
+          const jsonChunk = JSON.parse(completeChunk)
+          if (jsonChunk.response) {
+            process.stdout.write(jsonChunk.response)
+          }
+          boundary = buffer.indexOf("\n")
+        }
+      }
+    } catch (err: any) {
+      console.error(`Error generating text: ${err.message}`)
+    }
+
     process.exit(0)
   }
 

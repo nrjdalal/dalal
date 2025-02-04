@@ -1,13 +1,15 @@
 const generate = async ({
+  base = "http://localhost:11434",
   model,
   prompt,
   stream = false,
 }: {
+  base?: string
   model: string
   prompt: string
   stream?: boolean
 }) => {
-  const response = await fetch("http://localhost:11434/api/generate", {
+  const response = await fetch(`${base}/api/generate`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ model, prompt, stream }),
@@ -15,13 +17,19 @@ const generate = async ({
   return await response.json()
 }
 
-const tags = async () => {
-  const response = await fetch("http://localhost:11434/api/tags")
+const tags = async ({
+  base = "http://localhost:11434",
+}: { base?: string } = {}) => {
+  const response = await fetch(`${base}/api/tags`)
   return await response.json()
 }
 
-const version = async () => {
-  const response = await fetch("http://localhost:11434/api/version")
+const version = async ({
+  base = "http://localhost:11434",
+}: {
+  base?: string
+} = {}) => {
+  const response = await fetch(`${base}/api/version`)
   return await response.json()
 }
 

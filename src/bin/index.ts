@@ -35,6 +35,7 @@ const main = async () => {
     const cmd = parse({
       allowPositionals: true,
       options: {
+        base: { type: "string" },
         list: { type: "boolean", short: "l" },
         model: { type: "string" },
         help: { type: "boolean", short: "h" },
