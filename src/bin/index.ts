@@ -42,14 +42,9 @@ const main = async () => {
       },
     })
 
-    if (values.version) {
-      console.log(`${name}@${version}`)
-      process.exit(0)
-    }
-    if (values.help) {
-      console.log(helpMessage)
-      process.exit(0)
-    }
+    if (values.version) console.log(`${name}@${version}`)
+    if (values.help) console.log(helpMessage)
+    process.exit(0)
   } catch (err: any) {
     console.error(helpMessage)
     console.error(`\n${err.message}\n`)

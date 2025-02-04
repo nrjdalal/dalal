@@ -31,19 +31,13 @@ export const ollama = async (args: string[]) => {
       args,
     })
 
+    console.log("args", positionals)
+
     if (!positionals[0]) {
-      if (values.list) {
-        console.log(await tags())
-        process.exit(0)
-      }
-      if (values.version) {
-        console.log(await version())
-        process.exit(0)
-      }
-      if (values.help) {
-        console.log(helpMessage)
-        process.exit(0)
-      }
+      if (values.list) console.log(await tags())
+      if (values.version) console.log(await version())
+      if (values.help) console.log(helpMessage)
+      process.exit(0)
     }
 
     let model = values.model
