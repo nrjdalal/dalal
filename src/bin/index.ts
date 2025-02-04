@@ -1,21 +1,18 @@
 import { parseArgs } from "node:util"
+import { ollama } from "@/bin/commands/ollama"
 import { author, name, version } from "~/package.json"
-import { ollama } from "~/src/bin/commands/ollama"
 
-const versionMessage = `${name}@${version}`
-
-const helpMessage = `${name}@${version}
+const helpMessage = `Version:
+  ${name}@${version}
 
 Usage:
-  $ ${name} [options]
   $ ${name} <command> [options]
 
 Commands:
   ollama         Get up and running with large language models
 
 Options:
-  -h, --help     Display help message
-  -v, --version  Display version
+  -h, --help     Display help for command
 
 Author:
   ${author.name} <${author.email}> (${author.url})`
@@ -24,51 +21,38 @@ const parse: typeof parseArgs = (config) => {
   try {
     return parseArgs(config)
   } catch (err: any) {
-    console.error(`Error parsing arguments: ${err.message}`)
-    console.error(helpMessage)
-    process.exit(1)
+    throw new Error(`Error parsing arguments: ${err.message}`)
   }
 }
 
 const main = async () => {
   try {
-    const cmd = parse({
-      allowPositionals: true,
+    const command = process.argv.slice(2)
+
+    switch (command[0]) {
+      case "ollama":
+        await ollama(command.slice(1))
+        break
+    }
+
+    const { values } = parse({
       options: {
-        base: { type: "string" },
-        list: { type: "boolean", short: "l" },
-        model: { type: "string" },
         help: { type: "boolean", short: "h" },
         version: { type: "boolean", short: "v" },
       },
-    }) as {
-      command: string
-      positionals: string[]
-      values: Record<string, any>
+    })
+
+    if (values.version) {
+      console.log(`${name}@${version}`)
+      process.exit(0)
     }
-
-    cmd.command = process.argv.slice(2).join(" ")
-
-    if (cmd.positionals[0] === "ollama") {
-      await ollama(cmd)
+    if (values.help) {
+      console.log(helpMessage)
+      process.exit(0)
     }
-
-    if (!cmd.positionals.length) {
-      if (cmd.values.version) {
-        console.log(versionMessage)
-        process.exit(0)
-      }
-      if (cmd.values.help) {
-        console.log(helpMessage)
-        process.exit(0)
-      }
-    }
-
-    console.error(helpMessage)
-    console.error(`\nUnknown command:\n  $ ${name} ${cmd.command}\n`)
-    process.exit(1)
   } catch (err: any) {
-    console.error(`Unexpected error: ${err.message}\n`)
+    console.error(helpMessage)
+    console.error(`\n${err.message}\n`)
     process.exit(1)
   }
 }
