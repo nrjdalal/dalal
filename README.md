@@ -1,111 +1,86 @@
-# Dalal - A CLI Tool for Interacting with Ollama Language Models
+# Dalal CLI Tool
 
-Dalal is a command-line interface (CLI) tool designed to interact with Ollama, a platform that enables running large language models locally. Currently, Dalal provides basic functionality to generate text using prompts and various options, but it's just the beginning of a broader ecosystem of tools aimed at enhancing productivity and automation.
-
-## Description
-
-Dalal allows users to interface with Ollama's language models directly from the command line. It simplifies tasks like generating text, listing available models, and fetching model information. The tool is designed to be extensible, with plans for additional features and commands in the future.
+**Dalal** is a command-line interface (CLI) tool designed to simplify interactions with large language models. Initially focused on Ollama, it will soon expand to include various other tools aimed at enhancing your experience in working with AI-driven applications.
 
 ## Features
 
-- **Text Generation**: Generate text using prompts.
-- **Model Listing**: List available models through Ollama.
-- **Base URL Configuration**: Specify a custom base URL for Ollama instances.
-- **Version Information**: Retrieve the version of the running Ollama server.
-- **Help System**: Built-in help system to display usage and options.
+- **Prompt-Based Text Generation**: Generate text using a specified model and prompt.
+- **Model Management**: List available models and view their details.
+- **Version Information**: Display the version of the Ollama service you are connected to.
+- **Directory Input**: Include all files in a directory as part of your prompt, ignoring `.gitignore` files.
 
 ## Installation
 
-- Install Dalal using npm (I prefer you switch to [Bun](https://bun.sh))
+To install Dalal globally using npm, execute the following command:
 
 ```bash
 npm install -g dalal
 ```
 
-- Or use it directly with npx
-
-```bash
-npx dalal ollama <prompt> [options]
-```
-
 ## Usage
 
-### Basic Syntax
+### Basic Command Structure
 
 ```bash
 dalal ollama <prompt> [options]
 ```
 
-### Options
+- **`<prompt>`**: The text prompt you want to use for generating the response.
+- **`[options]`**: Optional flags to customize the behavior of the command.
 
-- **-b, --base**: Base URL for Ollama server (default: `http://localhost:11434`).
+### Available Options
 
-```bash
-dalal ollama -b http://myollama:8080 ...
-```
-
-- **-l, --list**: List available models.
-
-```bash
-dalal ollama --list
-```
-
-- **-m, --model**: Specify the model name to use.
-
-```bash
-dalal ollama --model deepseek-r1 ...
-```
-
-- **-h, --help**: Display help message.
-
-```bash
-dalal ollama --help
-```
-
-- **--version**: Output the version of Dalal.
-
-```bash
-dalal ollama --version
-```
+- **`--base`, `-b`**: Specify the base URL of the Ollama service (default: `http://localhost:11434`).
+- **`--list`, `-l`**: List all available models.
+- **`--model`, `-m`**: Specify the model to use for text generation. If not provided, the first model in the list will be used.
+- **`--dir`, `-d`**: Include all files in the current directory as part of the prompt, ignoring `.gitignore` files.
+- **`--help`, `-h`**: Display help information for the `ollama` command.
+- **`--version`, `-v`**: Display the version of the Ollama service.
 
 ### Examples
 
-1. Generate text using a prompt:
+1. **Generate text with a specific model:**
 
-```bash
-dalal ollama "Explain quantum computing in simple terms."
-```
+   ```bash
+   dalal ollama "Translate this to French" --model "france"
+   ```
 
-2. List available models:
+2. **List available models:**
 
-```bash
-dalal ollama --list
-```
+   ```bash
+   dalal ollama --list
+   ```
 
-3. Use a custom base URL:
+3. **Include directory contents in the prompt and generate text:**
 
-```bash
-dalal ollama -b http://myollama:8080 "What's the weather like today?"
-```
+   ```bash
+   dalal ollama "Summarize this project" --dir
+   ```
 
-## Roadmap
+4. **Display version information:**
 
-The future of Dalal is exciting, with plans to expand its capabilities beyond Ollama interaction. Upcoming features include:
+   ```bash
+   dalal ollama --version
+   ```
 
-- **New Commands**: Additional CLI commands for different tasks.
-- **Scripting Support**: Allow users to create and execute scripts using Dalal.
-- **Integration**: Better integration with other tools and services.
-- **Advanced Features**: Enhanced model management and customization options.
+## Contributing
 
-## Keywords
+We welcome contributions from the open-source community! If you have ideas for new features or improvements, feel free to [submit an issue](https://github.com/your-username/dalal/issues) or create a pull request.
 
-- cli
-- ollama
-- language-models
-- text-generation
-- ai
-- machine-learning
+1. Fork the repository.
+2. Create your feature branch: `git checkout -b my-new-feature`.
+3. Commit your changes: `git commit -am 'Add some feature'`.
+4. Push to the branch: `git push origin my-new-feature`.
+5. Open a pull request.
 
 ## License
 
-MIT License
+Dalal is released under the [MIT License](LICENSE).
+
+## About Us
+
+At Dalal, we believe in leveraging technology to simplify complex processes and empower individuals with powerful tools. Our mission is to make AI more accessible and useful for everyone.
+
+---
+
+Feel free to explore the potential of Dalal and join us on this exciting journey!
