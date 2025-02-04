@@ -36,6 +36,7 @@ const main = async () => {
       allowPositionals: true,
       options: {
         list: { type: "boolean", short: "l" },
+        model: { type: "string" },
         help: { type: "boolean", short: "h" },
         version: { type: "boolean", short: "v" },
       },
