@@ -29,6 +29,7 @@ Usage:
   $ ${name} ollama [options]
 
 Options:
+  -l, --list     List local models
   -h, --help     Display help
   -v, --version  Display version`
 
@@ -47,6 +48,7 @@ const main = async () => {
     const { values, positionals } = parse({
       allowPositionals: true,
       options: {
+        list: { type: "boolean", short: "l" },
         help: { type: "boolean", short: "h" },
         version: { type: "boolean", short: "v" },
       },
@@ -55,24 +57,26 @@ const main = async () => {
     const command = positionals[0]
 
     if (command === "ollama") {
-      const command = positionals.slice(1)[0]
-
-      if (command === "list") {
-        const models = await ollamaListLocalModels()
-        console.log(models)
-        process.exit(0)
-      }
-      if (values.help) {
-        console.log(ollamaHelpMessage)
-        process.exit(0)
-      }
-      if (values.version) {
-        console.log(await ollamaVersion())
-        process.exit(0)
+      if (positionals.length === 1) {
+        if (values.list) {
+          const models = await ollamaListLocalModels()
+          console.log(models)
+          process.exit(0)
+        }
+        if (values.help) {
+          console.log(ollamaHelpMessage)
+          process.exit(0)
+        }
+        if (values.version) {
+          console.log(await ollamaVersion())
+          process.exit(0)
+        }
       }
 
       console.error(ollamaHelpMessage)
-      console.error(`\nUnknown command:\n  $ ${name} ${command}\n`)
+      console.error(
+        `\nUnknown command:\n  $ ${name} ${process.argv.slice(2).join(" ")}\n`,
+      )
       process.exit(1)
     }
 
@@ -88,7 +92,9 @@ const main = async () => {
     }
 
     console.error(helpMessage)
-    console.error(`\nUnknown command:\n  $ ${name} ${command}\n`)
+    console.error(
+      `\nUnknown command:\n  $ ${name} ${process.argv.slice(2).join(" ")}\n`,
+    )
     process.exit(1)
   } catch (err: any) {
     console.error(`Unexpected error: ${err.message}`)
