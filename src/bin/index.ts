@@ -52,17 +52,6 @@ const main = async () => {
       },
     })
 
-    if (!positionals.length) {
-      if (values.version) {
-        console.log(versionMessage)
-        process.exit(0)
-      }
-      if (values.help) {
-        console.log(helpMessage)
-        process.exit(0)
-      }
-    }
-
     const command = positionals[0]
 
     if (command === "ollama") {
@@ -85,6 +74,17 @@ const main = async () => {
       console.error(ollamaHelpMessage)
       console.error(`\nUnknown command:\n  $ ${name} ${command}\n`)
       process.exit(1)
+    }
+
+    if (!positionals.length) {
+      if (values.version) {
+        console.log(versionMessage)
+        process.exit(0)
+      }
+      if (values.help) {
+        console.log(helpMessage)
+        process.exit(0)
+      }
     }
 
     console.error(helpMessage)
