@@ -1,8 +1,15 @@
 {
   "name": "dalal",
-  "version": "0.0.1-canary.2",
-  "description": "",
-  "keywords": [],
+  "version": "0.0.1-canary.3",
+  "description": "A CLI Tool for Interacting with Ollama Language Models",
+  "keywords": [
+    "cli",
+    "ollama",
+    "language-models",
+    "text-generation",
+    "ai",
+    "machine-learning"
+  ],
   "repository": "nrjdalal/starter",
   "license": "MIT",
   "author": {
@@ -39,6 +46,11 @@
   "lint-staged": {
     "*": "prettier --write --ignore-unknown",
     "package.json": "sort-package-json"
+  },
+  "dependencies": {
+    "@types/picomatch": "^3.0.2",
+    "globby": "^14.0.2",
+    "picomatch": "^4.0.2"
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.5.0",

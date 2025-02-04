@@ -1,6 +1,8 @@
+import fs from "fs"
 import { parseArgs } from "node:util"
 import { tags, version } from "@/lib/ollama"
 import { name } from "~/package.json"
+import { globby } from "globby"
 
 const helpMessage = `ollama
 
@@ -22,6 +24,7 @@ export const ollama = async (args: string[]) => {
     const { values, positionals } = parseArgs({
       allowPositionals: true,
       options: {
+        dir: { type: "boolean", short: "d" },
         base: { type: "string", short: "b" },
         list: { type: "boolean", short: "l" },
         model: { type: "string" },
@@ -30,6 +33,17 @@ export const ollama = async (args: string[]) => {
       },
       args,
     })
+
+    let fileData = ""
+
+    if (values.dir) {
+      const files = await globby("**/*", { gitignore: true })
+
+      for (const file of files) {
+        fileData += `\n--- ${file} ---\n
+${fs.readFileSync(file, "utf-8")}`
+      }
+    }
 
     if (!positionals.length) {
       if (values.list) console.log(await tags())
@@ -49,7 +63,7 @@ export const ollama = async (args: string[]) => {
     }
     console.log(`Generating text with model: ${model}\n`)
 
-    const prompt = positionals.join(" ")
+    const prompt = fileData + positionals.join(" ")
 
     const response = await fetch(
       (values.base || "http://localhost:11434") + "/api/generate",
