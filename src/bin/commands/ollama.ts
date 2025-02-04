@@ -86,7 +86,6 @@ export const ollama = async (args: string[]) => {
         boundary = buffer.indexOf("\n")
       }
     }
-
     process.exit(0)
   } catch (err: any) {
     console.error(helpMessage)
