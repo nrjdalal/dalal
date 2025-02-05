@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import { parseArgs } from "node:util"
 import { ollama } from "@/bin/commands/ollama"
 import { author, name, version } from "~/package.json"

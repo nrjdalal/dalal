@@ -7,10 +7,11 @@
 /*-error.log*
 
 # lockfiles
-yarn.lock
+bun.lock
+bun.lockb
 package-lock.json
 pnpm-lock.yaml
-bun.lockb
+yarn.lock
 
 # npm
 node_modules/
