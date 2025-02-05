@@ -34,17 +34,6 @@ export const ollama = async (args: string[]) => {
       args,
     })
 
-    let fileData = ""
-
-    if (values.dir) {
-      const files = await globby("**/*", { gitignore: true })
-
-      for (const file of files) {
-        fileData += `\n--- ${file} ---\n
-${fs.readFileSync(file, "utf-8")}`
-      }
-    }
-
     if (!positionals.length) {
       if (values.list) console.log(await tags())
       if (values.version) console.log(await version())
@@ -62,6 +51,21 @@ ${fs.readFileSync(file, "utf-8")}`
       model = getTags["models"][0].name
     }
     console.log(`Generating text with model: ${model}\n`)
+
+    let fileData = ""
+
+    if (values.dir) {
+      const files = await globby("**/*", { gitignore: true })
+
+      console.log("\nFiles attached:", files)
+
+      for (const file of files) {
+        fileData += `\n--- ${file} ---\n
+${fs.readFileSync(file, "utf-8")}`
+      }
+
+      console.log("\n")
+    }
 
     const prompt = fileData + positionals.join(" ")
 

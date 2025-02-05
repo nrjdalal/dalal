@@ -1,1 +1,1 @@
-console.log("No source are available!")
+export * as ollama from "@/lib/ollama"
