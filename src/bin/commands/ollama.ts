@@ -2,8 +2,8 @@
 import fs from "node:fs"
 import { parseArgs } from "node:util"
 import { tags, version } from "@/lib/ollama"
+import { listFiles } from "@/utils/list-files"
 import { name } from "~/package.json"
-import { globby } from "globby"
 
 const helpMessage = `ollama (https://ollama.com)
 
@@ -58,7 +58,7 @@ export const ollama = async (args: string[]) => {
     let fileData = ""
 
     if (values.dir) {
-      const files = await globby("**/*", { gitignore: true })
+      const files = await listFiles()
 
       console.log("\nFiles attached:", files)
 
@@ -115,4 +115,4 @@ ${fs.readFileSync(file, "utf-8")}`
   }
 }
 
-ollama(process.argv.slice(2))
+if (process.argv[2] !== "ollama") ollama(process.argv.slice(2))
