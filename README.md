@@ -65,7 +65,7 @@ dalal ollama <prompt> [options]
 
 ## Contributing
 
-We welcome contributions from the open-source community! If you have ideas for new features or improvements, feel free to [submit an issue](https://github.com/your-username/dalal/issues) or create a pull request.
+We welcome contributions from the open-source community! If you have ideas for new features or improvements, feel free to [submit an issue](https://github.com/nrjdalal/dalal/issues) or create a pull request.
 
 1. Fork the repository.
 2. Create your feature branch: `git checkout -b my-new-feature`.
