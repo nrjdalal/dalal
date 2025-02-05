@@ -1,4 +1,5 @@
-import fs from "fs"
+#!/usr/bin/env node
+import fs from "node:fs"
 import { parseArgs } from "node:util"
 import { tags, version } from "@/lib/ollama"
 import { name } from "~/package.json"
@@ -113,3 +114,5 @@ ${fs.readFileSync(file, "utf-8")}`
     process.exit(1)
   }
 }
+
+ollama(process.argv.slice(2))

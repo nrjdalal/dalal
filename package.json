@@ -1,6 +1,6 @@
 {
   "name": "dalal",
-  "version": "0.0.1-canary.11",
+  "version": "0.0.1-canary.13",
   "description": "A CLI Tool for Interacting with Ollama Language Models",
   "keywords": [
     "cli",
@@ -22,7 +22,8 @@
   "types": "./dist/index.d.ts",
   "bin": {
     "dalal": "./dist/bin/index.js",
-    "dll": "./dist/bin/index.js"
+    "dl": "./dist/bin/index.js",
+    "ol": "./dist/bin/ollama.js"
   },
   "files": [
     "dist"
