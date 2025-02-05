@@ -4,6 +4,7 @@ import { parseArgs } from "node:util"
 import { name } from "@/package.json"
 import { tags, version } from "@/src/lib/ollama"
 import { listFiles } from "@/src/utils/list-files"
+import ansiEscapes from "ansi-escapes"
 
 const helpMessage = `ollama (https://ollama.com)
 
@@ -88,6 +89,7 @@ ${fs.readFileSync(file, "utf-8")}`
     const reader = response.body.getReader()
     const decoder = new TextDecoder("utf-8")
     let buffer = ""
+    let output = ""
 
     while (true) {
       const { done, value } = await reader.read()
@@ -102,11 +104,20 @@ ${fs.readFileSync(file, "utf-8")}`
 
         const jsonChunk = JSON.parse(completeChunk)
         if (jsonChunk.response) {
+          output += jsonChunk.response
           process.stdout.write(jsonChunk.response)
         }
         boundary = buffer.indexOf("\n")
       }
     }
+
+    process.stdout.write(
+      ansiEscapes.cursorUp(output.split("\n").length - 1) +
+        ansiEscapes.cursorLeft +
+        ansiEscapes.eraseDown +
+        `--- ${output}`,
+    )
+
     process.exit(0)
   } catch (err: any) {
     console.error(helpMessage)

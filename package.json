@@ -49,6 +49,7 @@
     "package.json": "sort-package-json"
   },
   "dependencies": {
+    "ansi-escapes": "^7.0.0",
     "tinyglobby": "^0.2.10"
   },
   "devDependencies": {
