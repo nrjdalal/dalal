@@ -4,7 +4,7 @@ import { tags, version } from "@/lib/ollama"
 import { name } from "~/package.json"
 import { globby } from "globby"
 
-const helpMessage = `ollama
+const helpMessage = `ollama (https://ollama.com)
 
 Description:
   Get up and running with large language models
@@ -13,9 +13,11 @@ Usage:
   $ ${name} ollama <prompt> [options]
 
 Options:
-  -b, --base     Base URL (default: http://localhost:11434)
-  -l, --list     List models
-  -m, --model    Model name (default: first model)
+  -b, --base     Base URL
+                 Default: http://localhost:11434
+  -d, --dir      Prefix <prompt> with files in CWD
+  -l, --list     List local models
+  -m, --model    The model name
   -h, --help     Display help message
   -v, --version  Display version`
 

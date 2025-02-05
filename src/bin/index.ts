@@ -13,7 +13,7 @@ Commands:
   ollama      Get up and running with large language models
 
 Options:
-  -h, --help  Display help for command
+  -h, --help  Display help for <command>
 
 Author:
   ${author.name} <${author.email}> (${author.url})`
