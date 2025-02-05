@@ -115,7 +115,10 @@ ${fs.readFileSync(file, "utf-8")}`
       ansiEscapes.cursorUp(output.split("\n").length - 1) +
         ansiEscapes.cursorLeft +
         ansiEscapes.eraseDown +
-        `--- ${output}`,
+        output.replace(
+          /```([\s\S]*?)```/g,
+          (match, p1) => `\x1b[32m${p1}\x1b[0m`,
+        ),
     )
 
     process.exit(0)
