@@ -1,1 +1,1 @@
-export * as ollama from "@/lib/ollama"
+export * as ollama from "@/src/lib/ollama"

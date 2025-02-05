@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 import fs from "node:fs"
 import { parseArgs } from "node:util"
-import { tags, version } from "@/lib/ollama"
-import { listFiles } from "@/utils/list-files"
-import { name } from "~/package.json"
+import { name } from "@/package.json"
+import { tags, version } from "@/src/lib/ollama"
+import { listFiles } from "@/src/utils/list-files"
 
 const helpMessage = `ollama (https://ollama.com)
 

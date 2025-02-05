@@ -1,6 +1,6 @@
 {
   "name": "dalal",
-  "version": "0.0.1-canary.14",
+  "version": "0.0.1-canary.15",
   "description": "A CLI Tool for Interacting with Ollama Language Models",
   "keywords": [
     "cli",
