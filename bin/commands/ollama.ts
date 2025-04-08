@@ -61,14 +61,16 @@ export const ollama = async (args: string[]) => {
     if (values.dir) {
       const files = await listFiles()
 
-      console.log("\nFiles attached:", files)
+      console.log("Files attached:", files)
+
+      fileData = `\nContext, the following sections provide context for the prompt. Each section begins with "--- filename ---" and contains the content of the respective file. The last file content ends at "User (prompt):":\n`
 
       for (const file of files) {
         fileData += `\n--- ${file} ---\n
 ${fs.readFileSync(file, "utf-8")}`
       }
 
-      console.log("\n")
+      fileData += "\nUser (prompt): "
     }
 
     const prompt = fileData + positionals.join(" ")
@@ -115,10 +117,7 @@ ${fs.readFileSync(file, "utf-8")}`
       ansiEscapes.cursorUp(output.split("\n").length - 1) +
         ansiEscapes.cursorLeft +
         ansiEscapes.eraseDown +
-        output.replace(
-          /```([\s\S]*?)```/g,
-          (match, p1) => `\x1b[32m${p1}\x1b[0m`,
-        ),
+        output.replace(/```([\s\S]*?)```/g, (_, p1) => `\x1b[32m${p1}\x1b[0m`),
     )
 
     process.exit(0)
